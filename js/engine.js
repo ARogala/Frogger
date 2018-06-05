@@ -23,9 +23,8 @@ var Engine = (function(global) {
         canvas = doc.createElement('canvas'),
         ctx = canvas.getContext('2d'),
         lastTime;
-
-    canvas.width = 505;
-    canvas.height = 606;
+    canvas.width = 610;
+    canvas.height = 700;
     doc.body.appendChild(canvas);
 
     /* This function serves as the kickoff point for the game loop itself
@@ -93,7 +92,7 @@ var Engine = (function(global) {
         allEnemies.forEach(function(enemy) {
             enemy.update(dt);
         });
-        player.update();
+        player.update(dt);
     }
 
     /* This function initially draws the "game level", it will then call
@@ -107,15 +106,23 @@ var Engine = (function(global) {
          * for that particular row of the game level.
          */
         var rowImages = [
-                'images/water-block.png',   // Top row is water
-                'images/stone-block.png',   // Row 1 of 3 of stone
-                'images/stone-block.png',   // Row 2 of 3 of stone
-                'images/stone-block.png',   // Row 3 of 3 of stone
-                'images/grass-block.png',   // Row 1 of 2 of grass
-                'images/grass-block.png'    // Row 2 of 2 of grass
+                'images/grass-block.png',
+                'images/water-block.png',
+                'images/water-block.png',
+                'images/water-block.png',
+                'images/water-block.png',
+                'images/water-block.png',
+                'images/grass-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
+                'images/grass-block.png'
+
             ],
-            numRows = 6,
-            numCols = 5,
+            numRows = 13,
+            numCols = 10,
             row, col;
 
         // Before drawing, clear existing canvas
@@ -132,9 +139,10 @@ var Engine = (function(global) {
                  * to start drawing and the y coordinate to start drawing.
                  * We're using our Resources helpers to refer to our images
                  * so that we get the benefits of caching these images, since
-                 * we're using them over and over.
+                 * we're using them over and over.101 83
+                 * original size col*101 row*83
                  */
-                ctx.drawImage(Resources.get(rowImages[row]), col * 101, row * 83);
+                ctx.drawImage(Resources.get(rowImages[row]), col*61, row*50, 61, 103);
             }
         }
 
@@ -172,8 +180,17 @@ var Engine = (function(global) {
         'images/stone-block.png',
         'images/water-block.png',
         'images/grass-block.png',
-        'images/enemy-bug.png',
-        'images/char-boy.png'
+        'images/char-boy.png',
+        'images/char-cat-girl.png',
+        'images/char-horn-girl.png',
+        'images/char-pink-girl.png',
+        'images/char-princess-girl.png',
+        'images/Walker.png',
+        'images/WalkerDead.png',
+        'images/enemies/enemy-bug.png',
+        'images/enemies/SwampMonster.png',
+        'images/enemies/spr_classiccar_0.png',
+        'images/enemies/car-full.png'
     ]);
     Resources.onReady(init);
 
