@@ -12,35 +12,29 @@ const enemySwampYPos = [235, 285];
 const enemyCar1YPos = [380, 430];
 const enemyCar2YPos = [490, 540, 590];
 const enemySpeed = [150, 200, 250, 300, 350];
-const playerSpeed = 300;
 // Enemies our player must avoid
 let Enemy = function(enemyType) {
     // The image/sprite for our enemies
-    //enemyTypes are as follows:
     this.enemyType = enemyType;
     if(enemyType === 'bug') {
-        console.log(enemyType);
         this.enemySprite = enemies[0];
         this.x = -100;
         this.y = enemyBugYPos[getRandomInt(0,3)];
         this.speed = enemySpeed[getRandomInt(0,5)];
     }
     else if(enemyType === 'swamp') {
-        console.log(enemyType);
         this.enemySprite = enemies[1];
         this.x = 610;
         this.y = enemySwampYPos[getRandomInt(0,2)];
         this.speed = enemySpeed[getRandomInt(0,5)];
     }
     else if(enemyType === 'car1') {
-        console.log(enemyType);
         this.enemySprite = enemies[2];
         this.x = 610;
         this.y = enemyCar1YPos[getRandomInt(0,2)];
         this.speed = enemySpeed[getRandomInt(0,5)];
     }
     else if(enemyType === 'car2') {
-        console.log(enemyType);
         this.enemySprite = enemies[3];
         this.x = -100;
         this.y = enemyCar2YPos[getRandomInt(0,3)];
@@ -109,42 +103,26 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 let Player = function() {
-    this.playerSprite = 'images/char-boy.png';
-    this.x = 100;
-    this.y = 300;
-    this.speed = playerSpeed;
+    this.playerSprite = 'images/Walker.png';
+    this.x = 130;
+    this.y = 585;
 };
 
 Player.prototype.update = function(dt) {
-    if(this.key === 'upKeyDown') {
-        console.log(this.speed);
-        this.y = this.y - this.speed*dt;
+    if(this.key === 'left' && this.x > 8) {
+        this.x = this.x - 61;
     }
-    // else if(this.key === 'upKeyUp') {
-    //     //this.key = undefined;
-    // }
-    else if(this.key === 'downKeyDown') {
-        console.log(this.speed);
-        this.y = this.y + this.speed*dt;
+    if(this.key === 'up' && this.y > -15) {
+        this.y = this.y - 50;
     }
-    // else if(this.key === 'downKeyUp') {
-    //     //this.key = undefined;
-    // }
-    else if(this.key === 'leftKeyDown') {
-        console.log(this.speed);
-        this.x = this.x - this.speed*dt;
+    if(this.key === 'right' && this.x < 557) {
+        this.x = this.x + 61;
     }
-    // else if(this.key === 'leftKeyUp') {
-    //     //this.key = undefined;
-    // }
-    else if(this.key === 'rightKeyDown') {
-        console.log(this.speed);
-        this.x = this.x + this.speed*dt;
+    if(this.key === 'down' && this.y < 585) {
+        this.y = this.y + 50;
     }
-    // else if(this.key === 'rightKeyUp') {
-    //     //this.key = undefined;
-    // }
-    //this.key = undefined;
+
+    this.key = undefined;
 };
 
 Player.prototype.handleInput = function(keys) {
@@ -152,7 +130,7 @@ Player.prototype.handleInput = function(keys) {
 };
 
 Player.prototype.render = function() {
-    ctx.drawImage(Resources.get(this.playerSprite), this.x, this.y, 75, 130);
+    ctx.drawImage(Resources.get(this.playerSprite), this.x, this.y, 65, 78);
 };
 
 // Now instantiate your objects.
@@ -199,26 +177,26 @@ let player = new Player();
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method.
 // add wasd key
-/*
+
 document.addEventListener('keyup', function(e) {
     e.preventDefault();
     var allowedKeys = {
-        37:           'leftKeyUp',
-        38:           'upKeyUp',
-        39:           'rightKeyUp',
-        40:           'downKeyUp',
-        'ArrowLeft':  'leftKeyUp',
-        'ArrowUp':    'upKeyUp',
-        'ArrowRight': 'rightKeyUp',
-        'ArrowDown':  'downKeyUp',
-        65:           'leftKeyUp',
-        87:           'upKeyUp',
-        68:           'rightKeyUp',
-        83:           'downKeyUp',
-        'a':          'leftKeyUp',
-        'w':          'upKeyUp',
-        'd':          'rightKeyUp',
-        's':          'downKeyUp'
+        37:           'left',
+        38:           'up',
+        39:           'right',
+        40:           'down',
+        'ArrowLeft':  'left',
+        'ArrowUp':    'up',
+        'ArrowRight': 'right',
+        'ArrowDown':  'down',
+        65:           'left',
+        87:           'up',
+        68:           'right',
+        83:           'down',
+        'a':          'left',
+        'w':          'up',
+        'd':          'right',
+        's':          'down'
     };
 
     //keyCode is being deprecated use key
@@ -229,35 +207,9 @@ document.addEventListener('keyup', function(e) {
         player.handleInput(allowedKeys[e.keyCode]);
     }
 
-}, false);
-*/
+});
+
 // This listens for key presses and disables default scroll actions.
 document.addEventListener('keydown', function(e) {
     e.preventDefault();
-    var allowedKeys = {
-        37:           'leftKeyDown',
-        38:           'upKeyDown',
-        39:           'rightKeyDown',
-        40:           'downKeyDown',
-        'ArrowLeft':  'leftKeyDown',
-        'ArrowUp':    'upKeyDown',
-        'ArrowRight': 'rightKeyDown',
-        'ArrowDown':  'downKeyDown',
-        65:           'leftKeyDown',
-        87:           'upKeyDown',
-        68:           'rightKeyDown',
-        83:           'downKeyDown',
-        'a':          'leftKeyDown',
-        'w':          'upKeyDown',
-        'd':          'rightKeyDown',
-        's':          'downKeyDown'
-    };
-
-    //keyCode is being deprecated use key
-    if(e.key !== undefined) {
-        player.handleInput(allowedKeys[e.key]);
-    }
-    else if(e.keyCode !== undefined) {
-        player.handleInput(allowedKeys[e.keyCode]);
-    }
-}, false);
+});
