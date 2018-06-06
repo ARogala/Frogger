@@ -135,8 +135,14 @@ Player.prototype.render = function() {
 
 //reset the player
 Player.prototype.playerReset = function() {
+    this.playerSprite = 'images/Walker.png';
     this.x = 130;
-    this.y = -15;
+    this.y = 585;
+};
+
+Player.prototype.playerDeath = function() {
+    this.playerSprite = 'images/WalkerDead.png';
+    setTimeout(this.playerReset.bind(this), 1000);
 };
 /*
  The below function is called during update() in engine.js
@@ -169,108 +175,108 @@ function checkCollisions() {
     //bugs
     //bug1
     if(Math.abs(playerCords[0] - enemyCords[0]) <= 30 && (playerCords[1]+2 === enemyCords[1])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug2
     if(Math.abs(playerCords[0] - enemyCords[2]) <= 30 && (playerCords[1]+2 === enemyCords[3])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug3
     if(Math.abs(playerCords[0] - enemyCords[4]) <= 30 && (playerCords[1]+2 === enemyCords[5])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug4
     if(Math.abs(playerCords[0] - enemyCords[6]) <= 30 && (playerCords[1]+2 === enemyCords[7])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug5
     if(Math.abs(playerCords[0] - enemyCords[8]) <= 30 && (playerCords[1]+2 === enemyCords[9])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug6
     if(Math.abs(playerCords[0] - enemyCords[10]) <= 30 && (playerCords[1]+2 === enemyCords[11])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //bug7
     if(Math.abs(playerCords[0] - enemyCords[12]) <= 30 && (playerCords[1]+2 === enemyCords[13])) {
-        player.playerReset();
+        player.playerDeath();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //SwampMonsters
     //SwampMonster1
     if(Math.abs(playerCords[0] - enemyCords[14]) <= 30 && (playerCords[1]+50 === enemyCords[15])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //SwampMonster2
     if(Math.abs(playerCords[0] - enemyCords[16]) <= 30 && (playerCords[1]+50 === enemyCords[17])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //SwampMonster3
     if(Math.abs(playerCords[0] - enemyCords[18]) <= 30 && (playerCords[1]+50 === enemyCords[19])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //SwampMonster4
     if(Math.abs(playerCords[0] - enemyCords[20]) <= 30 && (playerCords[1]+50 === enemyCords[21])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //SwampMonster5
     if(Math.abs(playerCords[0] - enemyCords[22]) <= 30 && (playerCords[1]+50 === enemyCords[23])) {
-        player.playerReset();
+        player.playerDeath();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //car type1 Blue Classic
     //car1
     if(Math.abs(playerCords[0] - enemyCords[24]) <= 35 && (playerCords[1]+45 === enemyCords[25])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car2
     if(Math.abs(playerCords[0] - enemyCords[26]) <= 35 && (playerCords[1]+45 === enemyCords[27])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car3
     if(Math.abs(playerCords[0] - enemyCords[28]) <= 35 && (playerCords[1]+45 === enemyCords[29])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car4
     if(Math.abs(playerCords[0] - enemyCords[30]) <= 35 && (playerCords[1]+45 === enemyCords[31])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car5
     if(Math.abs(playerCords[0] - enemyCords[32]) <= 35 && (playerCords[1]+45 === enemyCords[33])) {
-        player.playerReset();
+        player.playerDeath();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //car type2 Red Truck
     //car1
     if(Math.abs(playerCords[0] - enemyCords[34]) <= 45 && (playerCords[1]+55 === enemyCords[35])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car2
     if(Math.abs(playerCords[0] - enemyCords[36]) <= 45 && (playerCords[1]+55 === enemyCords[37])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car3
     if(Math.abs(playerCords[0] - enemyCords[38]) <= 45 && (playerCords[1]+55 === enemyCords[39])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car4
     if(Math.abs(playerCords[0] - enemyCords[40]) <= 45 && (playerCords[1]+55 === enemyCords[41])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car5
     if(Math.abs(playerCords[0] - enemyCords[42]) <= 45 && (playerCords[1]+55 === enemyCords[43])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car6
     if(Math.abs(playerCords[0] - enemyCords[44]) <= 45 && (playerCords[1]+55 === enemyCords[45])) {
-        player.playerReset();
+        player.playerDeath();
     }
     //car7
     if(Math.abs(playerCords[0] - enemyCords[46]) <= 45 && (playerCords[1]+55 === enemyCords[47])) {
-        player.playerReset();
+        player.playerDeath();
     }
 }
 
