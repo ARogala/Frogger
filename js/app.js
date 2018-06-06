@@ -121,7 +121,7 @@ Player.prototype.update = function(dt) {
     if(this.key === 'down' && this.y < 585) {
         this.y = this.y + 50;
     }
-
+    //prevents if statment from beign run multiple times with one btn push
     this.key = undefined;
 };
 
@@ -133,10 +133,151 @@ Player.prototype.render = function() {
     ctx.drawImage(Resources.get(this.playerSprite), this.x, this.y, 65, 78);
 };
 
+//reset the player
+Player.prototype.playerReset = function() {
+    this.x = 130;
+    this.y = -15;
+};
+/*
+ The below function is called during update() in engine.js
+ It works by storing the player’s and enemies’ coordinates in separate arrays
+ Then checks, for each type of enemy, if the player’s X coordinate is close to the enemy’s
+ X coordinate and if the player’s Y coordinate is equal the enemy’s
+ Y coordinate. When both those conditions are met the player has been hit.
+
+ This check had to be done for each enemy type because each enemy type
+ is a different size therefore affecting how close the player can get to each
+ enemy type before a hit is simulated. Also, the size differences between the
+ player and enemy types affected the Y coordinate between the player and each enemy type
+
+ (note: enemy arrays length is 48, even index are X enemy coordinates,
+ and odd index are Y enemy coordinates)
+*/
+function checkCollisions() {
+
+    let playerCords = [];
+    let enemyCords  = [];
+    //get player cordinates
+    playerCords.push(player.x);
+    playerCords.push(player.y);
+
+    //get enemy cordinates
+    for(let enemy of allEnemies) {
+        enemyCords.push(Math.round(enemy.x));
+        enemyCords.push(enemy.y);
+    }
+    //bugs
+    //bug1
+    if(Math.abs(playerCords[0] - enemyCords[0]) <= 30 && (playerCords[1]+2 === enemyCords[1])) {
+        player.playerReset();
+    }
+    //bug2
+    if(Math.abs(playerCords[0] - enemyCords[2]) <= 30 && (playerCords[1]+2 === enemyCords[3])) {
+        player.playerReset();
+    }
+    //bug3
+    if(Math.abs(playerCords[0] - enemyCords[4]) <= 30 && (playerCords[1]+2 === enemyCords[5])) {
+        player.playerReset();
+    }
+    //bug4
+    if(Math.abs(playerCords[0] - enemyCords[6]) <= 30 && (playerCords[1]+2 === enemyCords[7])) {
+        player.playerReset();
+    }
+    //bug5
+    if(Math.abs(playerCords[0] - enemyCords[8]) <= 30 && (playerCords[1]+2 === enemyCords[9])) {
+        player.playerReset();
+    }
+    //bug6
+    if(Math.abs(playerCords[0] - enemyCords[10]) <= 30 && (playerCords[1]+2 === enemyCords[11])) {
+        player.playerReset();
+    }
+    //bug7
+    if(Math.abs(playerCords[0] - enemyCords[12]) <= 30 && (playerCords[1]+2 === enemyCords[13])) {
+        player.playerReset();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////
+    //SwampMonsters
+    //SwampMonster1
+    if(Math.abs(playerCords[0] - enemyCords[14]) <= 30 && (playerCords[1]+50 === enemyCords[15])) {
+        player.playerReset();
+    }
+    //SwampMonster2
+    if(Math.abs(playerCords[0] - enemyCords[16]) <= 30 && (playerCords[1]+50 === enemyCords[17])) {
+        player.playerReset();
+    }
+    //SwampMonster3
+    if(Math.abs(playerCords[0] - enemyCords[18]) <= 30 && (playerCords[1]+50 === enemyCords[19])) {
+        player.playerReset();
+    }
+    //SwampMonster4
+    if(Math.abs(playerCords[0] - enemyCords[20]) <= 30 && (playerCords[1]+50 === enemyCords[21])) {
+        player.playerReset();
+    }
+    //SwampMonster5
+    if(Math.abs(playerCords[0] - enemyCords[22]) <= 30 && (playerCords[1]+50 === enemyCords[23])) {
+        player.playerReset();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////////
+    //car type1 Blue Classic
+    //car1
+    if(Math.abs(playerCords[0] - enemyCords[24]) <= 35 && (playerCords[1]+45 === enemyCords[25])) {
+        player.playerReset();
+    }
+    //car2
+    if(Math.abs(playerCords[0] - enemyCords[26]) <= 35 && (playerCords[1]+45 === enemyCords[27])) {
+        player.playerReset();
+    }
+    //car3
+    if(Math.abs(playerCords[0] - enemyCords[28]) <= 35 && (playerCords[1]+45 === enemyCords[29])) {
+        player.playerReset();
+    }
+    //car4
+    if(Math.abs(playerCords[0] - enemyCords[30]) <= 35 && (playerCords[1]+45 === enemyCords[31])) {
+        player.playerReset();
+    }
+    //car5
+    if(Math.abs(playerCords[0] - enemyCords[32]) <= 35 && (playerCords[1]+45 === enemyCords[33])) {
+        player.playerReset();
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////
+    //car type2 Red Truck
+    //car1
+    if(Math.abs(playerCords[0] - enemyCords[34]) <= 45 && (playerCords[1]+55 === enemyCords[35])) {
+        player.playerReset();
+    }
+    //car2
+    if(Math.abs(playerCords[0] - enemyCords[36]) <= 45 && (playerCords[1]+55 === enemyCords[37])) {
+        player.playerReset();
+    }
+    //car3
+    if(Math.abs(playerCords[0] - enemyCords[38]) <= 45 && (playerCords[1]+55 === enemyCords[39])) {
+        player.playerReset();
+    }
+    //car4
+    if(Math.abs(playerCords[0] - enemyCords[40]) <= 45 && (playerCords[1]+55 === enemyCords[41])) {
+        player.playerReset();
+    }
+    //car5
+    if(Math.abs(playerCords[0] - enemyCords[42]) <= 45 && (playerCords[1]+55 === enemyCords[43])) {
+        player.playerReset();
+    }
+    //car6
+    if(Math.abs(playerCords[0] - enemyCords[44]) <= 45 && (playerCords[1]+55 === enemyCords[45])) {
+        player.playerReset();
+    }
+    //car7
+    if(Math.abs(playerCords[0] - enemyCords[46]) <= 45 && (playerCords[1]+55 === enemyCords[47])) {
+        player.playerReset();
+    }
+}
+
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-//first 8 enemies are of type bug
+// first 7 enemies are of type bug
 let enemy1 = new Enemy('bug');
 let enemy2 = new Enemy('bug');
 let enemy3 = new Enemy('bug');
@@ -144,39 +285,36 @@ let enemy4 = new Enemy('bug');
 let enemy5 = new Enemy('bug');
 let enemy6 = new Enemy('bug');
 let enemy7 = new Enemy('bug');
-let enemy8 = new Enemy('bug');
-//next 5 are of type SwampMonster
+// next 5 are of type SwampMonster
+let enemy8  = new Enemy('swamp');
 let enemy9  = new Enemy('swamp');
 let enemy10 = new Enemy('swamp');
 let enemy11 = new Enemy('swamp');
 let enemy12 = new Enemy('swamp');
-let enemy13 = new Enemy('swamp');
-//the next 5 are of type car1
+// next 5 are of type car1 Blue Classic
+let enemy13 = new Enemy('car1');
 let enemy14 = new Enemy('car1');
 let enemy15 = new Enemy('car1');
 let enemy16 = new Enemy('car1');
 let enemy17 = new Enemy('car1');
-let enemy18 = new Enemy('car1');
-//the next 8 are of thpe car2
+// next 7 are of type car2 RedTruck
+let enemy18 = new Enemy('car2');
 let enemy19 = new Enemy('car2');
 let enemy20 = new Enemy('car2');
 let enemy21 = new Enemy('car2');
 let enemy22 = new Enemy('car2');
 let enemy23 = new Enemy('car2');
 let enemy24 = new Enemy('car2');
-let enemy25 = new Enemy('car2');
-let enemy26 = new Enemy('car2');
-
 
 let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10,
 enemy11, enemy12, enemy13, enemy14, enemy15, enemy16, enemy17, enemy18, enemy19, enemy20, enemy21,
-enemy22, enemy23, enemy24, enemy25, enemy26];
+enemy22, enemy23, enemy24];
 
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method.
-// add wasd key
+// add wasd keys and account for keyCode being deprecated
 
 document.addEventListener('keyup', function(e) {
     e.preventDefault();
