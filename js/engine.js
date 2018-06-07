@@ -162,6 +162,9 @@ var Engine = (function(global) {
         });
 
         player.render();
+        gem1.render();
+        gem2.render();
+        brain.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -190,7 +193,12 @@ var Engine = (function(global) {
         'images/enemies/enemy-bug.png',
         'images/enemies/SwampMonster.png',
         'images/enemies/spr_classiccar_0.png',
-        'images/enemies/car-full.png'
+        'images/enemies/car-full.png',
+        'images/brain2.png',
+        'images/GemBlue.png',
+        'images/GemGreen.png',
+        'images/GemOrange.png'
+        // 'images/Heart.png'
     ]);
     Resources.onReady(init);
 

@@ -6,7 +6,7 @@ function getRandomInt(min, max) {
   return Math.floor(Math.random() * (max - min)) + min;
 }
 
-//audio
+//add sound tracks and sound effects! What game is complete without this?
 const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio/field2_Master.ogg',
 'audio/gatveVarniu.ogg', 'audio/InnerCore_High.ogg', 'audio/MarchofDetermination.ogg',
 'audio/maskedyoshisthemeremastered.ogg', 'audio/RoadTrip.ogg', 'audio/WretchedBlade1.ogg'];
@@ -30,6 +30,7 @@ function playAudio() {
 
 const enemies = ['images/enemies/enemy-bug.png','images/enemies/SwampMonster.png',
 'images/enemies/spr_classiccar_0.png', 'images/enemies/car-full.png'];
+const gems = ['images/GemGreen.png', 'images/GemOrange.png', 'images/GemBlue.png'];
 const enemyBugYPos = [37, 87, 137];
 const enemySwampYPos = [235, 285];
 const enemyCar1YPos = [380, 430];
@@ -192,6 +193,53 @@ Player.prototype.playerDeath = function() {
 
     setTimeout(this.playerReset.bind(this), 1000);
 };
+
+/* gem classes
+ a gem is centered on top left tile at x = 12 and y = 15
+ to place gem from there add 61 in x direction and 50 in y direction for each block
+
+ Two gem classes were created to make placing on enemy tiles easier
+ the goal is to have one gem randomly placed on the water tiles
+ and one gem placed on the road tiles.
+*/
+let FirstGem = function() {
+    this.gemSprite = gems[getRandomInt(0,2)];
+    this.x = 12 + 61*getRandomInt(0,10);
+    this.y = 65 + 50*getRandomInt(0,5);
+};
+
+FirstGem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.gemSprite), this.x, this.y, 35, 60);
+};
+
+let SecondGem = function() {
+    this.gemSprite = gems[getRandomInt(0,3)];
+    this.x = 12  + 61*getRandomInt(0,10);
+    this.y = 365 + 50*getRandomInt(0,5);
+}
+
+SecondGem.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.gemSprite), this.x, this.y, 35, 60);
+}
+
+let gem1 = new FirstGem();
+let gem2 = new SecondGem();
+
+
+//Yummy brain
+let Brain = function() {
+    this.brainSprite = 'images/brain2.png';
+    this.x = 2.5;
+    this.y = 30;
+};
+
+Brain.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.brainSprite), this.x, this.y, 56, 47);
+}
+
+let brain = new Brain();
+
+
 /*
  The below function is called during update() in engine.js
  It works by storing the player’s and enemies’ coordinates in separate arrays
