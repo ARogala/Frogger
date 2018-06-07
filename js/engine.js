@@ -165,6 +165,10 @@ var Engine = (function(global) {
         gem1.render();
         gem2.render();
         brain.render();
+        if(gemCount === 2) {
+            winBrain.render();
+        }
+
     }
 
     /* This function does nothing but it could have been a good place to

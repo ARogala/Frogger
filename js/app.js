@@ -200,45 +200,73 @@ Player.prototype.playerDeath = function() {
 
  Two gem classes were created to make placing on enemy tiles easier
  the goal is to have one gem randomly placed on the water tiles
- and one gem placed on the road tiles.
+ and one gem randomly placed on the road tiles.
 */
+let gemCount = 0;
+
 let FirstGem = function() {
-    this.gemSprite = gems[getRandomInt(0,2)];
-    this.x = 12 + 61*getRandomInt(0,10);
-    this.y = 65 + 50*getRandomInt(0,5);
+    this.gemSprite = gems[getRandomInt(0,3)];
+    this.x = 12  + 61*getRandomInt(0,10);
+    this.y = 365 + 50*getRandomInt(0,5);
 };
 
 FirstGem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.gemSprite), this.x, this.y, 35, 60);
 };
 
+//when player comes in contact with a gem collect it and remove it from screen
+FirstGem.prototype.collect = function() {
+    gemCount += 1;
+    this.x = -100;
+    this.y = -100;
+    console.log('I collected gem1 ' + gemCount);
+};
+
 let SecondGem = function() {
-    this.gemSprite = gems[getRandomInt(0,3)];
-    this.x = 12  + 61*getRandomInt(0,10);
-    this.y = 365 + 50*getRandomInt(0,5);
-}
+    this.gemSprite = gems[getRandomInt(0,2)];
+    this.x = 12 + 61*getRandomInt(0,10);
+    this.y = 65 + 50*getRandomInt(0,5);
+};
 
 SecondGem.prototype.render = function() {
     ctx.drawImage(Resources.get(this.gemSprite), this.x, this.y, 35, 60);
-}
+};
+
+//when player comes in contact with a gem collect it and remove it from screen
+SecondGem.prototype.collect = function() {
+    gemCount += 1;
+    this.x = -100;
+    this.y = -100;
+    console.log('I collected gem2 ' + gemCount);
+};
 
 let gem1 = new FirstGem();
 let gem2 = new SecondGem();
 
 
 //Yummy brain
-let Brain = function() {
+//x = 2.5 y = 30 will center brain on top left block
+let brainCount = 0;
+let Brain = function(x,y) {
     this.brainSprite = 'images/brain2.png';
-    this.x = 2.5;
-    this.y = 30;
+    this.x = x;
+    this.y = y;
 };
 
 Brain.prototype.render = function() {
     ctx.drawImage(Resources.get(this.brainSprite), this.x, this.y, 56, 47);
+};
+
+//when player comes in contact with the brains eat them!!!
+Brain.prototype.eat = function() {
+    brainCount += 1;
+    this.x = -100;
+    this.y = -100;
+    console.log('i have eaten ' + brainCount);
 }
 
-let brain = new Brain();
-
+let brain    = new Brain(2.5, 30);
+let winBrain = new Brain(63.5, 30);
 
 /*
  The below function is called during update() in engine.js
@@ -255,19 +283,61 @@ let brain = new Brain();
  (note: enemy arrays length is 48, even index are X enemy coordinates,
  and odd index are Y enemy coordinates)
 */
+
 function checkCollisions() {
 
     let playerCords = [];
     let enemyCords  = [];
-    //get player cordinates
+    let gemCords    = [];
+    let brainCords  = [];
+    //get player coordinates
     playerCords.push(player.x);
     playerCords.push(player.y);
+    //get gem coordinates
+    gemCords.push(gem1.x);
+    gemCords.push(gem1.y);
+    gemCords.push(gem2.x);
+    gemCords.push(gem2.y);
+    //get brain coordinates
+    brainCords.push(brain.x);
+    brainCords.push(brain.y);
+    if(gemCount === 2) {
+        brainCords.push(winBrain.x);
+        brainCords.push(winBrain.y);
+    }
 
-    //get enemy cordinates
+    //console.log(brainCords);
+    //get enemy coordinates
     for(let enemy of allEnemies) {
         enemyCords.push(Math.round(enemy.x));
         enemyCords.push(enemy.y);
     }
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //brains
+    //brain
+    if(Math.abs(playerCords[0] - brainCords[0]) <= 30 && (playerCords[1]+45 === brainCords[1])) {
+        brain.eat();
+        console.log('eat brain');
+    }
+    //winBrain
+    if(Math.abs(playerCords[0] - brainCords[2]) <= 30 && (playerCords[1]+45 === brainCords[3])) {
+        winBrain.eat();
+        console.log('eat winBrain');
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
+    //gems
+    //gem1
+    //console.log(Math.abs(playerCords[0] - gemCords[0]));
+    if(Math.abs(playerCords[0] - gemCords[0]) <= 30 && (playerCords[1]+30 === gemCords[1])) {
+        gem1.collect();
+    }
+    //gem2
+    if(Math.abs(playerCords[0] - gemCords[2]) <= 30 && (playerCords[1]+30 === gemCords[3])) {
+        gem2.collect();
+    }
+
+    /////////////////////////////////////////////////////////////////////////////////////////////
     //bugs
     //bug1
     if(Math.abs(playerCords[0] - enemyCords[0]) <= 30 && (playerCords[1]+2 === enemyCords[1])) {
@@ -380,38 +450,38 @@ function checkCollisions() {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 // first 7 enemies are of type bug
-let enemy1 = new Enemy('bug');
-let enemy2 = new Enemy('bug');
-let enemy3 = new Enemy('bug');
-let enemy4 = new Enemy('bug');
-let enemy5 = new Enemy('bug');
-let enemy6 = new Enemy('bug');
-let enemy7 = new Enemy('bug');
-// next 5 are of type SwampMonster
-let enemy8  = new Enemy('swamp');
-let enemy9  = new Enemy('swamp');
-let enemy10 = new Enemy('swamp');
-let enemy11 = new Enemy('swamp');
-let enemy12 = new Enemy('swamp');
-// next 5 are of type car1 Blue Classic
-let enemy13 = new Enemy('car1');
-let enemy14 = new Enemy('car1');
-let enemy15 = new Enemy('car1');
-let enemy16 = new Enemy('car1');
-let enemy17 = new Enemy('car1');
-// next 7 are of type car2 RedTruck
-let enemy18 = new Enemy('car2');
-let enemy19 = new Enemy('car2');
-let enemy20 = new Enemy('car2');
-let enemy21 = new Enemy('car2');
-let enemy22 = new Enemy('car2');
-let enemy23 = new Enemy('car2');
-let enemy24 = new Enemy('car2');
+// let enemy1 = new Enemy('bug');
+// let enemy2 = new Enemy('bug');
+// let enemy3 = new Enemy('bug');
+// let enemy4 = new Enemy('bug');
+// let enemy5 = new Enemy('bug');
+// let enemy6 = new Enemy('bug');
+// let enemy7 = new Enemy('bug');
+// // next 5 are of type SwampMonster
+// let enemy8  = new Enemy('swamp');
+// let enemy9  = new Enemy('swamp');
+// let enemy10 = new Enemy('swamp');
+// let enemy11 = new Enemy('swamp');
+// let enemy12 = new Enemy('swamp');
+// // next 5 are of type car1 Blue Classic
+// let enemy13 = new Enemy('car1');
+// let enemy14 = new Enemy('car1');
+// let enemy15 = new Enemy('car1');
+// let enemy16 = new Enemy('car1');
+// let enemy17 = new Enemy('car1');
+// // next 7 are of type car2 RedTruck
+// let enemy18 = new Enemy('car2');
+// let enemy19 = new Enemy('car2');
+// let enemy20 = new Enemy('car2');
+// let enemy21 = new Enemy('car2');
+// let enemy22 = new Enemy('car2');
+// let enemy23 = new Enemy('car2');
+// let enemy24 = new Enemy('car2');
 
-let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10,
-enemy11, enemy12, enemy13, enemy14, enemy15, enemy16, enemy17, enemy18, enemy19, enemy20, enemy21,
-enemy22, enemy23, enemy24];
-
+// let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10,
+// enemy11, enemy12, enemy13, enemy14, enemy15, enemy16, enemy17, enemy18, enemy19, enemy20, enemy21,
+// enemy22, enemy23, enemy24];
+let allEnemies =[];
 let player = new Player();
 
 // This listens for key presses and sends the keys to your
