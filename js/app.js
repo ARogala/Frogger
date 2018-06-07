@@ -11,9 +11,15 @@ const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio
 'audio/gatveVarniu.ogg', 'audio/InnerCore_High.ogg', 'audio/MarchofDetermination.ogg',
 'audio/maskedyoshisthemeremastered.ogg', 'audio/RoadTrip.ogg', 'audio/WretchedBlade1.ogg'];
 
-const soundEffects = ['audio/deathe.wav','audio/stepdirt_8.wav'];
+const soundEffects = ['audio/deathe.wav','audio/stepdirt_8.wav', 'audio/coin1.wav', 'audio/coin2.wav',
+'audio/coin3.wav'];
 let soundTrack = new Audio(soundTracks[getRandomInt(0,9)]);
 let stepSound, deathSound;
+deathSound = new Audio(soundEffects[0]);
+stepSound  = new Audio(soundEffects[1]);
+let coinSound1 = new Audio(soundEffects[2]);
+let coinSound2 = new Audio(soundEffects[3]);
+let coinSound3 = new Audio(soundEffects[4]);
 let playSoundEffects;
 document.getElementById('soundBtn').addEventListener('click', playAudio);
 
@@ -21,10 +27,12 @@ function playAudio() {
     soundTrack.volume = 0.5;
     soundTrack.loop = true;
     soundTrack.play();
-    deathSound = new Audio(soundEffects[0]);
+
     deathSound.volume = 1;
-    stepSound  = new Audio(soundEffects[1]);
+
     stepSound.volume = 1;
+    coinSound1.volume = 1;
+
     playSoundEffects = true;
 }
 
@@ -216,10 +224,18 @@ FirstGem.prototype.render = function() {
 
 //when player comes in contact with a gem collect it and remove it from screen
 FirstGem.prototype.collect = function() {
+    coinSound1.play();
+    coinSound2.play();
+    coinSound3.play();
     gemCount += 1;
     this.x = -100;
     this.y = -100;
-    console.log('I collected gem1 ' + gemCount);
+};
+
+FirstGem.prototype.reset = function() {
+    this.gemSprite = gems[getRandomInt(0,3)];
+    this.x = 12  + 61*getRandomInt(0,10);
+    this.y = 365 + 50*getRandomInt(0,5);
 };
 
 let SecondGem = function() {
@@ -234,10 +250,18 @@ SecondGem.prototype.render = function() {
 
 //when player comes in contact with a gem collect it and remove it from screen
 SecondGem.prototype.collect = function() {
+    coinSound1.play();
+    coinSound2.play();
+    coinSound3.play();
     gemCount += 1;
     this.x = -100;
     this.y = -100;
-    console.log('I collected gem2 ' + gemCount);
+};
+
+SecondGem.prototype.reset = function() {
+    this.gemSprite = gems[getRandomInt(0,2)];
+    this.x = 12 + 61*getRandomInt(0,10);
+    this.y = 65 + 50*getRandomInt(0,5);
 };
 
 let gem1 = new FirstGem();
@@ -257,16 +281,58 @@ Brain.prototype.render = function() {
     ctx.drawImage(Resources.get(this.brainSprite), this.x, this.y, 56, 47);
 };
 
+Brain.prototype.reset = function(x,y) {
+    this.x = x;
+    this.y = y;
+};
+
 //when player comes in contact with the brains eat them!!!
+//reset player, gems, brains, gemCount, brainCount
+//increment starCount
 Brain.prototype.eat = function() {
+    deathSound.play();
     brainCount += 1;
     this.x = -100;
     this.y = -100;
-    console.log('i have eaten ' + brainCount);
+    if(gemCount === 2 && brainCount === 2) {
+        starCount += 2;
+        gemCount = 0;
+        brainCount = 0;
+        setTimeout(function() {
+            player.playerReset();
+            brain.reset(2.5, 30);
+            winBrain.reset(63.5, 30);
+            gem1.reset();
+            gem2.reset();
+        },500);
+
+        console.log('starCount ' + starCount);
+        console.log('gemCount ' + gemCount);
+        console.log('brainCount ' + brainCount);
+    }
+    else if((gemCount === 1 || gemCount === 0) && brainCount === 1) {
+        starCount += 1;
+        gemCount = 0;
+        brainCount = 0;
+        setTimeout(function(){
+            player.playerReset();
+            brain.reset(2.5, 30);
+            gem1.reset();
+            gem2.reset();
+        },500);
+
+        console.log('starCount ' + starCount);
+        console.log('gemCount ' + gemCount);
+        console.log('brainCount ' + brainCount);
+    }
 }
 
 let brain    = new Brain(2.5, 30);
 let winBrain = new Brain(63.5, 30);
+
+
+//stars
+starCount = 0;
 
 /*
  The below function is called during update() in engine.js
@@ -317,12 +383,10 @@ function checkCollisions() {
     //brain
     if(Math.abs(playerCords[0] - brainCords[0]) <= 30 && (playerCords[1]+45 === brainCords[1])) {
         brain.eat();
-        console.log('eat brain');
     }
     //winBrain
     if(Math.abs(playerCords[0] - brainCords[2]) <= 30 && (playerCords[1]+45 === brainCords[3])) {
         winBrain.eat();
-        console.log('eat winBrain');
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////
