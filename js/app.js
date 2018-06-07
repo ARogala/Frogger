@@ -5,6 +5,29 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+//audio
+const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio/field2_Master.ogg',
+'audio/gatveVarniu.ogg', 'audio/InnerCore_High.ogg', 'audio/MarchofDetermination.ogg',
+'audio/maskedyoshisthemeremastered.ogg', 'audio/RoadTrip.ogg', 'audio/WretchedBlade1.ogg'];
+
+const soundEffects = ['audio/deathe.wav','audio/stepdirt_8.wav'];
+let soundTrack = new Audio(soundTracks[getRandomInt(0,9)]);
+let stepSound, deathSound;
+let playSoundEffects;
+document.getElementById('soundBtn').addEventListener('click', playAudio);
+
+function playAudio() {
+    soundTrack.volume = 0.5;
+    soundTrack.loop = true;
+    soundTrack.play();
+    deathSound = new Audio(soundEffects[0]);
+    deathSound.volume = 1;
+    stepSound  = new Audio(soundEffects[1]);
+    stepSound.volume = 1;
+    playSoundEffects = true;
+}
+
 const enemies = ['images/enemies/enemy-bug.png','images/enemies/SwampMonster.png',
 'images/enemies/spr_classiccar_0.png', 'images/enemies/car-full.png'];
 const enemyBugYPos = [37, 87, 137];
@@ -109,17 +132,38 @@ let Player = function() {
 };
 
 Player.prototype.update = function(dt) {
+
     if(this.key === 'left' && this.x > 8) {
         this.x = this.x - 61;
+        if(playSoundEffects === true) {
+            stepSound.pause();
+            stepSound.currentTime = 0;
+            stepSound.play();
+        }
     }
     if(this.key === 'up' && this.y > -15) {
         this.y = this.y - 50;
+        if(playSoundEffects === true) {
+            stepSound.pause();
+            stepSound.currentTime = 0;
+            stepSound.play();
+        }
     }
     if(this.key === 'right' && this.x < 557) {
         this.x = this.x + 61;
+        if(playSoundEffects === true) {
+            stepSound.pause();
+            stepSound.currentTime = 0;
+            stepSound.play();
+        }
     }
     if(this.key === 'down' && this.y < 585) {
         this.y = this.y + 50;
+        if(playSoundEffects === true) {
+            stepSound.pause();
+            stepSound.currentTime = 0;
+            stepSound.play();
+        }
     }
     //prevents if statment from beign run multiple times with one btn push
     this.key = undefined;
@@ -142,6 +186,10 @@ Player.prototype.playerReset = function() {
 
 Player.prototype.playerDeath = function() {
     this.playerSprite = 'images/WalkerDead.png';
+    if(playSoundEffects === true) {
+        deathSound.play();
+    }
+
     setTimeout(this.playerReset.bind(this), 1000);
 };
 /*
