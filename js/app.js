@@ -14,26 +14,24 @@ const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio
 const soundEffects = ['audio/deathe.wav','audio/stepdirt_8.wav', 'audio/coin1.wav', 'audio/coin2.wav',
 'audio/coin3.wav'];
 let soundTrack = new Audio(soundTracks[getRandomInt(0,9)]);
-let stepSound, deathSound;
-deathSound = new Audio(soundEffects[0]);
-stepSound  = new Audio(soundEffects[1]);
+
+let deathSound = new Audio(soundEffects[0]);
+let stepSound  = new Audio(soundEffects[1]);
 let coinSound1 = new Audio(soundEffects[2]);
 let coinSound2 = new Audio(soundEffects[3]);
 let coinSound3 = new Audio(soundEffects[4]);
-let playSoundEffects;
+deathSound.volume = 1;
+stepSound.volume  = 1;
+coinSound1.volume = 1;
+coinSound2.volume = 1;
+coinSound3.volume = 1;
+
 document.getElementById('soundBtn').addEventListener('click', playAudio);
 
 function playAudio() {
     soundTrack.volume = 0.5;
     soundTrack.loop = true;
     soundTrack.play();
-
-    deathSound.volume = 1;
-
-    stepSound.volume = 1;
-    coinSound1.volume = 1;
-
-    playSoundEffects = true;
 }
 
 const enemies = ['images/enemies/enemy-bug.png','images/enemies/SwampMonster.png',
@@ -144,35 +142,27 @@ Player.prototype.update = function(dt) {
 
     if(this.key === 'left' && this.x > 8) {
         this.x = this.x - 61;
-        if(playSoundEffects === true) {
-            stepSound.pause();
-            stepSound.currentTime = 0;
-            stepSound.play();
-        }
+        stepSound.pause();
+        stepSound.currentTime = 0;
+        stepSound.play();
     }
     if(this.key === 'up' && this.y > -15) {
         this.y = this.y - 50;
-        if(playSoundEffects === true) {
-            stepSound.pause();
-            stepSound.currentTime = 0;
-            stepSound.play();
-        }
+        stepSound.pause();
+        stepSound.currentTime = 0;
+        stepSound.play();
     }
     if(this.key === 'right' && this.x < 557) {
         this.x = this.x + 61;
-        if(playSoundEffects === true) {
-            stepSound.pause();
-            stepSound.currentTime = 0;
-            stepSound.play();
-        }
+        stepSound.pause();
+        stepSound.currentTime = 0;
+        stepSound.play();
     }
     if(this.key === 'down' && this.y < 585) {
         this.y = this.y + 50;
-        if(playSoundEffects === true) {
-            stepSound.pause();
-            stepSound.currentTime = 0;
-            stepSound.play();
-        }
+        stepSound.pause();
+        stepSound.currentTime = 0;
+        stepSound.play();
     }
     //prevents if statment from beign run multiple times with one btn push
     this.key = undefined;
@@ -197,16 +187,13 @@ let playerHit = 0;
 Player.prototype.playerDeath = function() {
     _this = this;
     this.playerSprite = 'images/WalkerDead.png';
-    if(playSoundEffects === true) {
-        deathSound.play();
-    }
+    deathSound.play();
     //setTimeout(this.playerReset.bind(this), 1000);
     playerHit += 1;
     if(playerHit === 1) {
         heartCount -=1;
         gem1.reset();
         gem2.reset();
-        console.log('wtf');
         gemCount = 0;
     }
     setTimeout(function() {
@@ -216,13 +203,11 @@ Player.prototype.playerDeath = function() {
     },1000);
 
     if(heartCount === 0) {
-        //console.log('You Lose!!');
         gameLoss(starCount);
     }
 };
 
 function gameLoss(starCount) {
-    console.log('Sorry you lost you collected ' + starCount + ' stars!');
    setTimeout(function() {
         //window.location.reload(true);
         window.open('GameOver.html', "_self");
@@ -253,8 +238,13 @@ FirstGem.prototype.render = function() {
 //when player comes in contact with a gem collect it and remove it from screen
 FirstGem.prototype.collect = function() {
     coinSound1.play();
-    coinSound2.play();
-    coinSound3.play();
+    setTimeout(function() {
+        coinSound2.play();
+    },coinSound1.duration*1000);
+    setTimeout(function() {
+        coinSound3.play();
+    },(coinSound1.duration*1000)+(coinSound2.duration*1000));
+
     gemCount += 1;
     this.x = -100;
     this.y = -100;
@@ -279,8 +269,13 @@ SecondGem.prototype.render = function() {
 //when player comes in contact with a gem collect it and remove it from screen
 SecondGem.prototype.collect = function() {
     coinSound1.play();
-    coinSound2.play();
-    coinSound3.play();
+    setTimeout(function() {
+        coinSound2.play();
+    },coinSound1.duration*1000);
+    setTimeout(function() {
+        coinSound3.play();
+    },(coinSound1.duration*1000)+(coinSound2.duration*1000));
+
     gemCount += 1;
     this.x = -100;
     this.y = -100;
@@ -333,10 +328,6 @@ Brain.prototype.eat = function() {
             gem1.reset();
             gem2.reset();
         },500);
-
-        console.log('starCount ' + starCount);
-        console.log('gemCount ' + gemCount);
-        console.log('brainCount ' + brainCount);
     }
     else if((gemCount === 1 || gemCount === 0) && brainCount === 1) {
         starCount += 1;
@@ -348,10 +339,6 @@ Brain.prototype.eat = function() {
             gem1.reset();
             gem2.reset();
         },500);
-
-        console.log('starCount ' + starCount);
-        console.log('gemCount ' + gemCount);
-        console.log('brainCount ' + brainCount);
     }
 }
 
@@ -465,7 +452,6 @@ function checkCollisions() {
     /////////////////////////////////////////////////////////////////////////////////////////////
     //gems
     //gem1
-    //console.log(Math.abs(playerCords[0] - gemCords[0]));
     if(Math.abs(playerCords[0] - gemCords[0]) <= 30 && (playerCords[1]+30 === gemCords[1])) {
         gem1.collect();
     }
