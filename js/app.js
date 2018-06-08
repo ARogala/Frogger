@@ -20,9 +20,24 @@ let coinSound1 = new Audio(soundEffects[2]);
 let coinSound2 = new Audio(soundEffects[3]);
 let coinSound3 = new Audio(soundEffects[4]);
 
-document.getElementById('soundBtn').addEventListener('click', playAudio);
+document.getElementById('playBtn').addEventListener('click', playAudio);
+document.getElementById('stopBtn').addEventListener('click', stopAudio);
+document.getElementById('nextBtn').addEventListener('click', nextTrack);
 
 function playAudio() {
+    soundTrack.volume = 0.5;
+    soundTrack.loop = true;
+    soundTrack.play();
+}
+
+function stopAudio() {
+    soundTrack.pause();
+    soundTrack.currentTime = 0;
+}
+
+function nextTrack() {
+    stopAudio();
+    soundTrack = new Audio(soundTracks[getRandomInt(0,9)]);
     soundTrack.volume = 0.5;
     soundTrack.loop = true;
     soundTrack.play();
