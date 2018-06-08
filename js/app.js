@@ -212,19 +212,7 @@ Player.prototype.playerDeath = function() {
 
         playerHit = 0;
     },1000);
-
-    if(heartCount === 0) {
-        gameLoss(starCount);
-    }
 };
-
-function gameLoss(starCount) {
-   setTimeout(function() {
-        //window.location.reload(true);
-        window.open('GameOver.html', "_self");
-   },1000);
-
-}
 
 /* gem classes
  a gem is centered on top left tile at x = 12 and y = 15
@@ -366,26 +354,23 @@ let Star = function(offset) {
 };
 
 Star.prototype.render = function() {
+
     if(starCount >= 6) {
-        winner();
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
+        ctx.font = '50px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText("Winner!", 220, 200);
     }
+
     let x = 570;
     for(let i = 0; i < starCount; i++) {
         ctx.drawImage(Resources.get(this.starSprite), x, this.y, 40, 68);
         x = x - 35;
     }
-
 };
 
-function winner() {
-    setTimeout(function() {
-        //window.location.reload(true);
-        window.open('GameOver.html', "_self");
-   },1000);
-}
-
 let star = new Star(0);
-
 
 //hearts
 let heartCount = 5;
@@ -396,6 +381,15 @@ let Heart = function() {
 };
 
 Heart.prototype.render = function() {
+
+    if(heartCount === 0) {
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
+        ctx.font = '50px Arial';
+        ctx.fillStyle = 'white';
+        ctx.fillText("Sorry You lost!", 150, 200);
+    }
+
     let x = 570;
     for(let i = 0; i < heartCount; i++) {
         ctx.drawImage(Resources.get(this.heartSprite), x, this.y, 40, 68);

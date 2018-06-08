@@ -126,7 +126,7 @@ var Engine = (function(global) {
             row, col;
 
         // Before drawing, clear existing canvas
-        ctx.clearRect(0,0,canvas.width,canvas.height)
+        ctx.clearRect(0,0,canvas.width,canvas.height);
 
         /* Loop through the number of rows and columns we've defined above
          * and, using the rowImages array, draw the correct image for that
@@ -204,7 +204,8 @@ var Engine = (function(global) {
         'images/GemGreen.png',
         'images/GemOrange.png',
         'images/Heart.png',
-        'images/Star.png'
+        'images/Star.png',
+        'images/gameover.png'
     ]);
     Resources.onReady(init);
 
@@ -213,4 +214,5 @@ var Engine = (function(global) {
      * from within their app.js files.
      */
     global.ctx = ctx;
+    global.canvas = canvas;
 })(this);
