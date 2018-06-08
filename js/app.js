@@ -201,8 +201,10 @@ Player.prototype.playerDeath = function() {
     playerHit += 1;
     if(playerHit === 1) {
         heartCount -=1;
-        gem1.reset();
-        gem2.reset();
+        setTimeout(function() {
+            gem1.reset();
+            gem2.reset();
+        },1000);
         gemCount = 0;
     }
     setTimeout(function() {
@@ -364,7 +366,7 @@ let Star = function(offset) {
 };
 
 Star.prototype.render = function() {
-    if(starCount === 2) {
+    if(starCount >= 6) {
         winner();
     }
     let x = 570;
