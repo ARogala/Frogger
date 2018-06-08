@@ -193,14 +193,42 @@ Player.prototype.playerReset = function() {
     this.y = 585;
 };
 
+let playerHit = 0;
 Player.prototype.playerDeath = function() {
+    _this = this;
     this.playerSprite = 'images/WalkerDead.png';
     if(playSoundEffects === true) {
         deathSound.play();
     }
+    //setTimeout(this.playerReset.bind(this), 1000);
+    playerHit += 1;
+    if(playerHit === 1) {
+        heartCount -=1;
+        gem1.reset();
+        gem2.reset();
+        console.log('wtf');
+        gemCount = 0;
+    }
+    setTimeout(function() {
+        _this.playerReset();
 
-    setTimeout(this.playerReset.bind(this), 1000);
+        playerHit = 0;
+    },1000);
+
+    if(heartCount === 0) {
+        //console.log('You Lose!!');
+        gameLoss(starCount);
+    }
 };
+
+function gameLoss(starCount) {
+    console.log('Sorry you lost you collected ' + starCount + ' stars!');
+   setTimeout(function() {
+        //window.location.reload(true);
+        window.open('GameOver.html', "_self");
+   },1000);
+
+}
 
 /* gem classes
  a gem is centered on top left tile at x = 12 and y = 15
@@ -333,6 +361,51 @@ let winBrain = new Brain(63.5, 30);
 
 //stars
 starCount = 0;
+let Star = function(offset) {
+    this.starSprite = 'images/Star.png';
+    this.x = 570 - offset;
+    this.y = -23;
+};
+
+Star.prototype.render = function() {
+    if(starCount === 2) {
+        winner();
+    }
+    let x = 570;
+    for(let i = 0; i < starCount; i++) {
+        ctx.drawImage(Resources.get(this.starSprite), x, this.y, 40, 68);
+        x = x - 35;
+    }
+
+};
+
+function winner() {
+    setTimeout(function() {
+        //window.location.reload(true);
+        window.open('GameOver.html', "_self");
+   },1000);
+}
+
+let star = new Star(0);
+
+
+//hearts
+let heartCount = 5;
+let Heart = function() {
+    this.heartSprite = 'images/Heart.png';
+    this.x = 570;
+    this.y = 640;
+};
+
+Heart.prototype.render = function() {
+    let x = 570;
+    for(let i = 0; i < heartCount; i++) {
+        ctx.drawImage(Resources.get(this.heartSprite), x, this.y, 40, 68);
+        x = x - 40
+    }
+};
+
+let heart = new Heart();
 
 /*
  The below function is called during update() in engine.js
@@ -372,12 +445,12 @@ function checkCollisions() {
         brainCords.push(winBrain.y);
     }
 
-    //console.log(brainCords);
     //get enemy coordinates
     for(let enemy of allEnemies) {
         enemyCords.push(Math.round(enemy.x));
         enemyCords.push(enemy.y);
     }
+
     /////////////////////////////////////////////////////////////////////////////////////////////
     //brains
     //brain
@@ -427,85 +500,69 @@ function checkCollisions() {
     if(Math.abs(playerCords[0] - enemyCords[10]) <= 30 && (playerCords[1]+2 === enemyCords[11])) {
         player.playerDeath();
     }
-    //bug7
-    if(Math.abs(playerCords[0] - enemyCords[12]) <= 30 && (playerCords[1]+2 === enemyCords[13])) {
-        player.playerDeath();
-    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////
     //SwampMonsters
     //SwampMonster1
-    if(Math.abs(playerCords[0] - enemyCords[14]) <= 30 && (playerCords[1]+50 === enemyCords[15])) {
+    if(Math.abs(playerCords[0] - enemyCords[12]) <= 30 && (playerCords[1]+50 === enemyCords[13])) {
         player.playerDeath();
     }
     //SwampMonster2
-    if(Math.abs(playerCords[0] - enemyCords[16]) <= 30 && (playerCords[1]+50 === enemyCords[17])) {
+    if(Math.abs(playerCords[0] - enemyCords[14]) <= 30 && (playerCords[1]+50 === enemyCords[15])) {
         player.playerDeath();
     }
     //SwampMonster3
-    if(Math.abs(playerCords[0] - enemyCords[18]) <= 30 && (playerCords[1]+50 === enemyCords[19])) {
+    if(Math.abs(playerCords[0] - enemyCords[16]) <= 30 && (playerCords[1]+50 === enemyCords[17])) {
         player.playerDeath();
     }
     //SwampMonster4
-    if(Math.abs(playerCords[0] - enemyCords[20]) <= 30 && (playerCords[1]+50 === enemyCords[21])) {
-        player.playerDeath();
-    }
-    //SwampMonster5
-    if(Math.abs(playerCords[0] - enemyCords[22]) <= 30 && (playerCords[1]+50 === enemyCords[23])) {
+    if(Math.abs(playerCords[0] - enemyCords[18]) <= 30 && (playerCords[1]+50 === enemyCords[19])) {
         player.playerDeath();
     }
 
     /////////////////////////////////////////////////////////////////////////////////////////////////
     //car type1 Blue Classic
     //car1
-    if(Math.abs(playerCords[0] - enemyCords[24]) <= 35 && (playerCords[1]+45 === enemyCords[25])) {
+    if(Math.abs(playerCords[0] - enemyCords[20]) <= 35 && (playerCords[1]+45 === enemyCords[21])) {
         player.playerDeath();
     }
     //car2
-    if(Math.abs(playerCords[0] - enemyCords[26]) <= 35 && (playerCords[1]+45 === enemyCords[27])) {
+    if(Math.abs(playerCords[0] - enemyCords[22]) <= 35 && (playerCords[1]+45 === enemyCords[23])) {
         player.playerDeath();
     }
     //car3
-    if(Math.abs(playerCords[0] - enemyCords[28]) <= 35 && (playerCords[1]+45 === enemyCords[29])) {
+    if(Math.abs(playerCords[0] - enemyCords[24]) <= 35 && (playerCords[1]+45 === enemyCords[25])) {
         player.playerDeath();
     }
     //car4
-    if(Math.abs(playerCords[0] - enemyCords[30]) <= 35 && (playerCords[1]+45 === enemyCords[31])) {
-        player.playerDeath();
-    }
-    //car5
-    if(Math.abs(playerCords[0] - enemyCords[32]) <= 35 && (playerCords[1]+45 === enemyCords[33])) {
+    if(Math.abs(playerCords[0] - enemyCords[26]) <= 35 && (playerCords[1]+45 === enemyCords[27])) {
         player.playerDeath();
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////
     //car type2 Red Truck
     //car1
-    if(Math.abs(playerCords[0] - enemyCords[34]) <= 45 && (playerCords[1]+55 === enemyCords[35])) {
+    if(Math.abs(playerCords[0] - enemyCords[28]) <= 45 && (playerCords[1]+55 === enemyCords[29])) {
         player.playerDeath();
     }
     //car2
-    if(Math.abs(playerCords[0] - enemyCords[36]) <= 45 && (playerCords[1]+55 === enemyCords[37])) {
+    if(Math.abs(playerCords[0] - enemyCords[30]) <= 45 && (playerCords[1]+55 === enemyCords[31])) {
         player.playerDeath();
     }
     //car3
-    if(Math.abs(playerCords[0] - enemyCords[38]) <= 45 && (playerCords[1]+55 === enemyCords[39])) {
+    if(Math.abs(playerCords[0] - enemyCords[32]) <= 45 && (playerCords[1]+55 === enemyCords[33])) {
         player.playerDeath();
     }
     //car4
-    if(Math.abs(playerCords[0] - enemyCords[40]) <= 45 && (playerCords[1]+55 === enemyCords[41])) {
+    if(Math.abs(playerCords[0] - enemyCords[34]) <= 45 && (playerCords[1]+55 === enemyCords[35])) {
         player.playerDeath();
     }
     //car5
-    if(Math.abs(playerCords[0] - enemyCords[42]) <= 45 && (playerCords[1]+55 === enemyCords[43])) {
+    if(Math.abs(playerCords[0] - enemyCords[36]) <= 45 && (playerCords[1]+55 === enemyCords[37])) {
         player.playerDeath();
     }
     //car6
-    if(Math.abs(playerCords[0] - enemyCords[44]) <= 45 && (playerCords[1]+55 === enemyCords[45])) {
-        player.playerDeath();
-    }
-    //car7
-    if(Math.abs(playerCords[0] - enemyCords[46]) <= 45 && (playerCords[1]+55 === enemyCords[47])) {
+    if(Math.abs(playerCords[0] - enemyCords[38]) <= 45 && (playerCords[1]+55 === enemyCords[39])) {
         player.playerDeath();
     }
 }
@@ -513,39 +570,37 @@ function checkCollisions() {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-// first 7 enemies are of type bug
-// let enemy1 = new Enemy('bug');
-// let enemy2 = new Enemy('bug');
-// let enemy3 = new Enemy('bug');
-// let enemy4 = new Enemy('bug');
-// let enemy5 = new Enemy('bug');
-// let enemy6 = new Enemy('bug');
-// let enemy7 = new Enemy('bug');
-// // next 5 are of type SwampMonster
-// let enemy8  = new Enemy('swamp');
-// let enemy9  = new Enemy('swamp');
-// let enemy10 = new Enemy('swamp');
-// let enemy11 = new Enemy('swamp');
-// let enemy12 = new Enemy('swamp');
-// // next 5 are of type car1 Blue Classic
-// let enemy13 = new Enemy('car1');
-// let enemy14 = new Enemy('car1');
-// let enemy15 = new Enemy('car1');
-// let enemy16 = new Enemy('car1');
-// let enemy17 = new Enemy('car1');
-// // next 7 are of type car2 RedTruck
-// let enemy18 = new Enemy('car2');
-// let enemy19 = new Enemy('car2');
-// let enemy20 = new Enemy('car2');
-// let enemy21 = new Enemy('car2');
-// let enemy22 = new Enemy('car2');
-// let enemy23 = new Enemy('car2');
-// let enemy24 = new Enemy('car2');
+// first 6 enemies are of type bug
+let enemy1 = new Enemy('bug');
+let enemy2 = new Enemy('bug');
+let enemy3 = new Enemy('bug');
+let enemy4 = new Enemy('bug');
+let enemy5 = new Enemy('bug');
+let enemy6 = new Enemy('bug');
 
-// let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10,
-// enemy11, enemy12, enemy13, enemy14, enemy15, enemy16, enemy17, enemy18, enemy19, enemy20, enemy21,
-// enemy22, enemy23, enemy24];
-let allEnemies =[];
+// next 4 are of type SwampMonster
+let enemy7  = new Enemy('swamp');
+let enemy8  = new Enemy('swamp');
+let enemy9 = new Enemy('swamp');
+let enemy10 = new Enemy('swamp');
+
+// next 4 are of type car1 Blue Classic
+let enemy11 = new Enemy('car1');
+let enemy12 = new Enemy('car1');
+let enemy13 = new Enemy('car1');
+let enemy14 = new Enemy('car1');
+
+// next 6 are of type car2 RedTruck
+let enemy15 = new Enemy('car2');
+let enemy16 = new Enemy('car2');
+let enemy17 = new Enemy('car2');
+let enemy18 = new Enemy('car2');
+let enemy19 = new Enemy('car2');
+let enemy20 = new Enemy('car2');
+
+let allEnemies = [enemy1, enemy2, enemy3, enemy4, enemy5, enemy6, enemy7, enemy8, enemy9, enemy10,
+enemy11, enemy12, enemy13, enemy14, enemy15, enemy16, enemy17, enemy18, enemy19, enemy20];
+
 let player = new Player();
 
 // This listens for key presses and sends the keys to your

@@ -168,7 +168,8 @@ var Engine = (function(global) {
         if(gemCount === 2) {
             winBrain.render();
         }
-
+        star.render();
+        heart.render();
     }
 
     /* This function does nothing but it could have been a good place to
@@ -201,8 +202,9 @@ var Engine = (function(global) {
         'images/brain2.png',
         'images/GemBlue.png',
         'images/GemGreen.png',
-        'images/GemOrange.png'
-        // 'images/Heart.png'
+        'images/GemOrange.png',
+        'images/Heart.png',
+        'images/Star.png'
     ]);
     Resources.onReady(init);
 
