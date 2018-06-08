@@ -14,17 +14,11 @@ const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio
 const soundEffects = ['audio/deathe.wav','audio/stepdirt_8.wav', 'audio/coin1.wav', 'audio/coin2.wav',
 'audio/coin3.wav'];
 let soundTrack = new Audio(soundTracks[getRandomInt(0,9)]);
-
 let deathSound = new Audio(soundEffects[0]);
 let stepSound  = new Audio(soundEffects[1]);
 let coinSound1 = new Audio(soundEffects[2]);
 let coinSound2 = new Audio(soundEffects[3]);
 let coinSound3 = new Audio(soundEffects[4]);
-deathSound.volume = 1;
-stepSound.volume  = 1;
-coinSound1.volume = 1;
-coinSound2.volume = 1;
-coinSound3.volume = 1;
 
 document.getElementById('soundBtn').addEventListener('click', playAudio);
 
@@ -140,25 +134,25 @@ let Player = function() {
 
 Player.prototype.update = function(dt) {
 
-    if(this.key === 'left' && this.x > 8) {
+    if(this.key === 'left' && this.x > 8 && playerHit === 0) {
         this.x = this.x - 61;
         stepSound.pause();
         stepSound.currentTime = 0;
         stepSound.play();
     }
-    if(this.key === 'up' && this.y > -15) {
+    if(this.key === 'up' && this.y > -15 && playerHit === 0) {
         this.y = this.y - 50;
         stepSound.pause();
         stepSound.currentTime = 0;
         stepSound.play();
     }
-    if(this.key === 'right' && this.x < 557) {
+    if(this.key === 'right' && this.x < 557 && playerHit === 0) {
         this.x = this.x + 61;
         stepSound.pause();
         stepSound.currentTime = 0;
         stepSound.play();
     }
-    if(this.key === 'down' && this.y < 585) {
+    if(this.key === 'down' && this.y < 585 && playerHit === 0) {
         this.y = this.y + 50;
         stepSound.pause();
         stepSound.currentTime = 0;
