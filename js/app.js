@@ -23,6 +23,7 @@ let coinSound3 = new Audio(soundEffects[4]);
 document.getElementById('playBtn').addEventListener('click', playAudio);
 document.getElementById('stopBtn').addEventListener('click', stopAudio);
 document.getElementById('nextBtn').addEventListener('click', nextTrack);
+document.getElementById('resetBtn').addEventListener('click', resetGame);
 
 function playAudio() {
     soundTrack.volume = 0.5;
@@ -41,6 +42,10 @@ function nextTrack() {
     soundTrack.volume = 0.5;
     soundTrack.loop = true;
     soundTrack.play();
+}
+
+function resetGame() {
+    window.location.reload(true);
 }
 
 const enemies = ['images/enemies/enemy-bug.png','images/enemies/SwampMonster.png',
