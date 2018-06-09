@@ -107,9 +107,9 @@ var Engine = (function(global) {
          */
         var rowImages = [
                 'images/grass-block.png',
-                'images/water-block.png',
-                'images/water-block.png',
-                'images/water-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
+                'images/stone-block.png',
                 'images/water-block.png',
                 'images/water-block.png',
                 'images/grass-block.png',
