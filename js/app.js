@@ -5,6 +5,7 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+StopWatchController.startStopWatch();
 
 //add sound tracks and sound effects! What game is complete without this?
 const soundTracks = ['audio/DarkContemplations.ogg', 'audio/Endgame.ogg', 'audio/field2_Master.ogg',

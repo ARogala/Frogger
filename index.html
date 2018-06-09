@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <title>Zombie Squash!!</title>
     <link rel="stylesheet" href="css/style.css">
+    <script src="js/stopWatchModule.js" defer></script>
 	<script src="js/resources.js" defer></script>
     <script src="js/app.js" defer></script>
     <script src="js/engine.js" defer></script>
+
 </head>
 <body>
 	<div class="btnContainer">
@@ -14,6 +16,21 @@
 		<button id="stopBtn" class="btn" type="button">Stop Music</button>
 		<button id="nextBtn" class="btn" type="button">Play Another Track</button>
 		<button id="resetBtn" class="btn" type="button">New Game</button>
+	</div>
+
+	<div class="timerDisplay">
+		<div id="hoursElapsed" class="output">
+		    00:
+		</div>
+		<div id="minutesElapsed" class="output">
+		    00:
+		</div>
+		<div id="secondsElapsed" class="output">
+		    00.
+		</div>
+		<div id="deciSecondsElapsed" class="output">
+		    00
+		</div>
 	</div>
 </body>
 </html>

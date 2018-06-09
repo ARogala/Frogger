@@ -1,6 +1,40 @@
-body {
-    text-align: center;
-    background-color: black;
+@font-face {
+    font-family: 'alarm_clockregular';
+    src: url('alarm_clock-webfont.woff2') format('woff2'),
+         url('alarm_clock-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
+body {
+    text-align: center;
+    background-color: white;
+}
 
+/*Styles for timer */
+.timerDisplay {
+    display: inline-block;
+    position: absolute;
+	top: 30px;
+    padding: 0 10px 0 30px;
+    background: rgba(0,0,0,1);
+    border-radius: 20px;
+    font-family: 'alarm_clockregular';
+    text-transform: uppercase;
+    color: #10f700;
+    font-weight: bold;
+    font-size: 20px;
+    text-align: center;
+}
+
+/*hide the hours not necessary for this game*/
+#hoursElapsed {
+    display: none;
+}
+
+.output {
+    display: inline-block;
+    padding: 2px;
+    width: 35px;
+    margin-left: -20px;
+}
