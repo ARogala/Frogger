@@ -191,7 +191,14 @@ Player.prototype.playerReset = function() {
     this.x = 130;
     this.y = 585;
 };
+/*
+when player is hit change image, play death sound, decrement heartCount, reset gems,
+reset gem count, reset player after 1 sec allowing dead player to appear on screen
 
+this function will get called multiple times when player is hit bc/ the player is still
+close to the enemies thus playerHit is set to act as a trap for proper decrement of
+heartCount
+*/
 let playerHit = 0;
 Player.prototype.playerDeath = function() {
     _this = this;
@@ -235,6 +242,7 @@ FirstGem.prototype.render = function() {
 };
 
 //when player comes in contact with a gem collect it and remove it from screen
+//play three coinSounds timed so each finishes playing before next starts
 FirstGem.prototype.collect = function() {
     coinSound1.play();
     setTimeout(function() {
@@ -249,6 +257,7 @@ FirstGem.prototype.collect = function() {
     this.y = -100;
 };
 
+//randomly reset gem position
 FirstGem.prototype.reset = function() {
     this.gemSprite = gems[getRandomInt(0,3)];
     this.x = 12  + 61*getRandomInt(0,10);
@@ -266,6 +275,7 @@ SecondGem.prototype.render = function() {
 };
 
 //when player comes in contact with a gem collect it and remove it from screen
+//play three coinSounds
 SecondGem.prototype.collect = function() {
     coinSound1.play();
     setTimeout(function() {
@@ -347,14 +357,14 @@ let winBrain = new Brain(63.5, 30);
 
 //stars
 starCount = 0;
-let Star = function(offset) {
+let Star = function() {
     this.starSprite = 'images/Star.png';
-    this.x = 570 - offset;
+    this.x = 570;
     this.y = -23;
 };
 
 Star.prototype.render = function() {
-
+    //player wins if 6 or more stars are collected
     if(starCount >= 6) {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
@@ -370,7 +380,7 @@ Star.prototype.render = function() {
     }
 };
 
-let star = new Star(0);
+let star = new Star();
 
 //hearts
 let heartCount = 5;
@@ -381,7 +391,7 @@ let Heart = function() {
 };
 
 Heart.prototype.render = function() {
-
+    //player loses if heartCount equal 0
     if(heartCount === 0) {
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
