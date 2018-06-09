@@ -8,7 +8,12 @@
 
 body {
     text-align: center;
-    background-color: white;
+    background: url('../images/horror-movie-2861891_1920.jpg') no-repeat center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
 }
 
 /*Styles for timer */
