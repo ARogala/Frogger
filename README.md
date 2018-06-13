@@ -2,11 +2,11 @@
 
 ## Table of Contents
 
-* [Instructions](#Instructions)
-* [Contributing](#Contributing)
-* [GamePlay Rules](#GamePlayRules)
-* [Future Plans](#FuturePlans)
-* [Dependencies](#Dependencies)
+* [Instructions](#instructions)
+* [Contributing](#contributing)
+* [GamePlay Rules](#gameplay-rules)
+* [Future Plans](#future-plans)
+* [Dependencies](#dependencies)
 
 ## Instructions
 
