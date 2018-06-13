@@ -18,7 +18,7 @@ The arrow keys or wasd keys are used to move the zombie around on the tiles.
 Feel free to fork the code and modify to your liking. I may open some issues in the future.
 Of course, please credit me (Andrew Rogala at https://github.com/ARogala/Frogger) for my initial work on Zombie Squash.
 
-## GamePlayRules
+## GamePlay Rules
 
 You have five (5) lives/hearts, get hit and lose a life!
 
@@ -38,7 +38,7 @@ The game also has some sound effects and music so turn on your speakers and clic
 
 Enjoy!
 
-## FuturePlans
+## Future Plans
 
 Add walking animation to the zombie.
 Add levels or increase difficultly as player advances.
