@@ -2,8 +2,8 @@
 
 ## Table of Contents
 
-* [Instructions](#instructions)
-* [Contributing](#contributing)
+* [Instructions](#Instructions)
+* [Contributing](#Contributing)
 * [GamePlay Rules](#GamePlayRules)
 * [Future Plans](#FuturePlans)
 * [Dependencies](#Dependencies)
@@ -13,12 +13,12 @@
 To play Zombie Squash download the code and open index.html in Chrome, FireFox, or Edge. (Internet Explorer is not supported)
 The arrow keys or wasd keys are used to move the zombie around on the tiles.
 
-##Contributing
+## Contributing
 
 Feel free to fork the code and modify to your liking. I may open some issues in the future.
 Of course, please credit me (Andrew Rogala at https://github.com/ARogala/Frogger) for my initial work on Zombie Squash.
 
-##GamePlay Rules
+## GamePlayRules
 
 You have five (5) lives/hearts, get hit and lose a life!
 
@@ -38,7 +38,7 @@ The game also has some sound effects and music so turn on your speakers and clic
 
 Enjoy!
 
-##Future Plans
+## FuturePlans
 
 Add walking animation to the zombie.
 Add levels or increase difficultly as player advances.
