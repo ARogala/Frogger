@@ -5,6 +5,8 @@ function getRandomInt(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min)) + min;
 }
+
+//start the game stop watch
 StopWatchController.startStopWatch();
 
 //add sound tracks and sound effects! What game is complete without this?
@@ -372,6 +374,7 @@ let Star = function() {
 Star.prototype.render = function() {
     //player wins if 6 or more stars are collected
     if(starCount >= 6) {
+        StopWatchController.stopStopWatch();
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
         ctx.font = '50px Arial';
@@ -397,13 +400,15 @@ let Heart = function() {
 };
 
 Heart.prototype.render = function() {
-    //player loses if heartCount equal 0
-    if(heartCount === 0) {
+    //player loses if heartCount equal 0 or 3 min passes
+    if(heartCount === 0 || UIController.getInput().minutesElement.innerHTML === '03:') {
+        StopWatchController.stopStopWatch();
         ctx.clearRect(0,0,canvas.width,canvas.height);
         ctx.drawImage(Resources.get('images/gameover.png'), 0, 0, canvas.width, canvas.height);
         ctx.font = '50px Arial';
         ctx.fillStyle = 'white';
         ctx.fillText("Sorry You lost!", 150, 200);
+        star.render();
     }
 
     let x = 570;
