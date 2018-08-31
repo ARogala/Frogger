@@ -13,6 +13,10 @@
 To play Zombie Squash download the code and open index.html in Chrome, FireFox, or Edge. (Internet Explorer is not supported)
 The arrow keys or wasd keys are used to move the zombie around on the tiles.
 
+Check out the game: https://andrewrogalafrogger.surge.sh
+
+Note: This game only works on desktop or laptop computers! Sorry no mobile support yet
+
 ## Contributing
 
 Feel free to fork the code and modify to your liking. I may open some issues in the future.
